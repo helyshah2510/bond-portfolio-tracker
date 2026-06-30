@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Bond portfolio tracker</title>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <h2 class="logo">🏦 Bond Tracker</h2>
+            <nav>
+                <a href="#" class="nav-link active" onclick="showView('dashboardView', this)">Dashboard</a>
+                <a href="#" class="nav-link" onclick="showView('allBondsView', this)">All Bonds</a>
+                <a href="#" class="nav-link" onclick="showView('analyticsView', this)">Analytics</a>
+            </nav>
+
+            <div class="mini-summary">
+                <p>Total Bonds: <span id="miniTotalBonds"></span></p>
+                <p>Total Value: ₹<span id="miniTotalValue"></span></p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="topbar">
+                <div>
+                    <h1>Bond Portfolio Tracker</h1>
+                    <!-- <p class="subtitle">Track and manage your bond investments</p> -->
+                </div>
+            </div>
+
+            <!-- DASHBOARD VIEW -->
+            <section id="dashboardView" class="view">
+                <div class="summary">
+                    <div class="summary-card">
+                    <div class="summary-icon icon-blue">💰</div>
+                    <div>
+                        <p class="summary-label">Total Bonds</p>
+                        <p class="summary-value" id="totalBonds"></p>
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-icon icon-green">📊</div>
+                    <div>
+                        <p class="summary-label">Total Value</p>
+                        <p class="summary-value">₹<span id="totalValue"></span></p>
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-icon icon-orange">📅</div>
+                    <div>
+                        <p class="summary-label">Total Coupon Income</p>
+                        <p class="summary-value">₹<span id="totalCoupon"></span></p>
+                    </div>
+                </div>
+            </div>
+
+                   <table class="bond-table">
+                        <thead>
+                            <tr>
+                                <th>Bond Name</th>
+                                <th>Face Value</th>
+                                <th>Coupon Rate</th>
+                                <th>Years to Maturity</th>
+                                <th>Market Rate</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bondTableBodyDashboard"></tbody>
+                    </table>
+            </section>
+
+            <!-- ALL BONDS VIEW -->
+            <section id="allBondsView" class="view" style="display:none;">
+                <div class="sort-controls">
+                    <button onclick="sortBonds('yearsToMaturity')">Sort by Maturity</button>
+                    <button onclick="sortBonds('couponRate')">Sort by Coupon Rate</button>
+                    <button onclick="sortBonds('faceValue')">Sort by Value</button>
+                </div>
+
+                <input type="text" id="searchInput" placeholder="Search bonds..." onkeyup="searchBonds()">
+
+                <table class="bond-table">
+                    <thead>
+                        <tr>
+                            <th>Bond Name</th>
+                            <th>Face Value</th>
+                            <th>Coupon Rate</th>
+                            <th>Years to Maturity</th>
+                            <th>Market Rate</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bondTableBody"></tbody>
+                </table>
+
+                <div class="form-section">
+                    <h2>Add New Bond</h2>
+                    <input type="text" id="nameInput" placeholder="Bond Name">
+                    <input type="number" id="faceValueInput" placeholder="Face Value">
+                    <input type="number" id="couponRateInput" placeholder="Coupon Rate">
+                    <input type="number" id="yearsInput" placeholder="Years to Maturity">
+                    <input type="number" id="marketRateInput" placeholder="Market Rate">
+                    <button onclick="addBond()">Add Bond</button>
+                </div>
+            </section>
+
+            <!-- ANALYTICS VIEW -->
+            <section id="analyticsView" class="view" style="display:none;">
+                <div class="summary">
+                    <p>Total Bonds: <span id="analyticsTotalBonds"></span></p>
+                    <p>Total Value: ₹<span id="analyticsTotalValue"></span></p>
+                    <p>Total Coupon Income: ₹<span id="analyticsTotalCoupon"></span></p>
+                </div>
+                <div class="charts-row">
+                    <div class="chart-card">
+                        <h3>Portfolio Allocation</h3>
+                        <canvas id="allocationChart"></canvas>
+                    </div>
+
+                    <div class="chart-card">
+                        <h3>Coupon Rate by Bond</h3>
+                        <canvas id="couponChart"></canvas>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
